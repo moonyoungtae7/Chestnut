@@ -1,0 +1,44 @@
+.chestnut-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: var(--chestnut-margin, 20px 0);
+  transition: var(--transition-smooth);
+}
+
+.chestnut-svg {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+  z-index: 2;
+  transition: var(--transition-smooth);
+}
+
+.chestnut-shadow {
+  width: 60px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  margin-top: -10px;
+  filter: blur(4px);
+  transition: var(--transition-smooth);
+  z-index: 1;
+}
+
+.big .chestnut-shadow {
+  width: 80px;
+}
+
+.little .chestnut-shadow {
+  width: 50px;
+}
+
+/* Hover Effect */
+.hover-enabled:hover .chestnut-svg {
+  transform: translateY(-8px);
+}
+
+.hover-enabled:hover .chestnut-shadow {
+  transform: scale(1.2);
+  opacity: 0.3;
+  filter: blur(6px);
+}

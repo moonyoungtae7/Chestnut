@@ -1,0 +1,69 @@
+.diary-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #F5F1DD;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.card-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-sweet-red);
+}
+
+.card-characters {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  background: #FAFAFA;
+  border-radius: 16px;
+}
+
+.card-char-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transform: scale(0.6);
+  margin: -30px 0; /* Adjust for scaling */
+}
+
+.char-label {
+  font-size: 18px; /* Larger because of scale(0.6) */
+  font-weight: 600;
+  color: #666;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-section h4 {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.content-section p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.emotion-tag {
+  font-size: 13px;
+  font-weight: 700;
+}

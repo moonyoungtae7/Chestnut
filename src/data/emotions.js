@@ -1,0 +1,22 @@
+export const EMOTIONS = [
+  { id: "joy", label_en: "Joy", hex: "#FFB84D", parent: null, vibe: "positive" },
+  { id: "love", label_en: "Love", hex: "#FFB84D", parent: "joy", vibe: "positive" },
+  { id: "pride", label_en: "Proud", hex: "#FFB84D", parent: "joy", vibe: "positive" },
+  { id: "delight", label_en: "Delighted", hex: "#FFD166", parent: "joy", vibe: "positive" },
+  { id: "relief", label_en: "Relieved", hex: "#66C2AD", parent: "joy", vibe: "positive" },
+  { id: "anger", label_en: "Anger", hex: "#FF6B6B", parent: null, vibe: "negative" },
+  { id: "annoyance", label_en: "Annoyed", hex: "#FF6B6B", parent: "anger", vibe: "negative" },
+  { id: "frustration", label_en: "Frustrated", hex: "#FF6B6B", parent: "anger", vibe: "negative" },
+  { id: "resentment", label_en: "Resentment", hex: "#FF7A7A", parent: "anger", vibe: "negative" },
+  { id: "overwhelm", label_en: "Overwhelmed", hex: "#FF6B6B", parent: "anger", vibe: "negative" },
+  { id: "sadness", label_en: "Sad", hex: "#7C9BE6", parent: null, vibe: "negative" },
+  { id: "guilt", label_en: "Guilty", hex: "#7C9BE6", parent: "sadness", vibe: "negative" },
+  { id: "shame", label_en: "Shameful", hex: "#7C9BE6", parent: "sadness", vibe: "negative" },
+  { id: "disappointment", label_en: "Disappointed", hex: "#7C9BE6", parent: "sadness", vibe: "negative" },
+  { id: "loneliness", label_en: "Lonely", hex: "#7C9BE6", parent: "sadness", vibe: "negative" },
+  { id: "anxiety", label_en: "Worried", hex: "#9B6FAF", parent: null, vibe: "negative" },
+  { id: "hope", label_en: "Hopeful", hex: "#FFB03B", parent: null, vibe: "positive" },
+  { id: "empathy", label_en: "Empathy", hex: "#66C2AD", parent: null, vibe: "positive" },
+  { id: "contempt", label_en: "Strong Rejection", hex: "#6FCF97", parent: null, vibe: "negative" },
+  { id: "vigilance", label_en: "Alert", hex: "#FFB03B", parent: null, vibe: "contextual" }
+];

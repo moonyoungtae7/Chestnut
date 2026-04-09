@@ -1,0 +1,135 @@
+.diary-page {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.diary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.diary-header h1 {
+  font-size: 24px;
+  color: var(--color-sweet-red);
+}
+
+.nav-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #E0E0E0;
+  border-radius: 50%;
+}
+
+.dot.active {
+  background-color: var(--color-sweet-red);
+}
+
+.diary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.diary-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.character-nametag {
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: 500;
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+
+.ux-text {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: 320px;
+  margin-bottom: 8px;
+}
+
+.diary-input {
+  width: 100%;
+  padding: 16px;
+  background-color: #F9F9F9;
+  border: 1.5px solid #EEEEEE;
+  border-radius: 12px;
+  min-height: 100px;
+  resize: vertical;
+  color: var(--color-text-primary);
+  transition: var(--transition-smooth);
+}
+
+.diary-input:focus {
+  outline: none;
+  border-color: var(--color-pastel-peach);
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background-color: var(--color-pastel-peach);
+  align-self: center;
+  opacity: 0.3;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  flex: 1;
+  padding: 16px;
+  background-color: #F5F5F5;
+  color: #777;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+
+.cancel-button:hover {
+  background-color: #EEEEEE;
+  color: #555;
+}
+
+.create-button {
+  flex: 2;
+  padding: 16px;
+  background-color: var(--color-sweet-red);
+  color: white;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(242, 150, 150, 0.3);
+  transition: var(--transition-smooth);
+}
+
+.create-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(242, 150, 150, 0.4);
+}
+
+.create-button:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+}
