@@ -33,7 +33,7 @@ const MyStoryPage = ({ entries }) => {
             className={`tab ${filterTarget === 'parent' ? 'active' : ''}`}
             onClick={() => setFilterTarget('parent')}
           >
-            Mom Chestnut
+            Big Chestnut
           </button>
           <button 
             className={`tab ${filterTarget === 'child' ? 'active' : ''}`}

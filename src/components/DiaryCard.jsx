@@ -24,7 +24,7 @@ const DiaryCard = ({ entry }) => {
             color={parent.emotion.hex} 
             hoverEffect={false} 
           />
-          <span className="char-label">Mom</span>
+          <span className="char-label">Big Chestnut</span>
         </div>
         <div className="card-char-item">
           <ChestnutCharacter 
@@ -32,19 +32,19 @@ const DiaryCard = ({ entry }) => {
             color={child.emotion ? child.emotion.hex : 'white'} 
             hoverEffect={false} 
           />
-          <span className="char-label">Child</span>
+          <span className="char-label">Little Chestnut</span>
         </div>
       </div>
 
       <div className="card-content">
         <div className="content-section">
-          <h4>Mom's Story</h4>
+          <h4>Big Chestnut's Story</h4>
           <p>{parent.text}</p>
           <span className="emotion-tag" style={{ color: parent.emotion.hex }}>#{parent.emotion.label_en}</span>
         </div>
         {child.emotion && (
           <div className="content-section">
-            <h4>Child's Story</h4>
+            <h4>Little Chestnut's Story</h4>
             <p>{child.text || 'No story shared.'}</p>
             <span className="emotion-tag" style={{ color: child.emotion.hex }}>#{child.emotion.label_en}</span>
           </div>

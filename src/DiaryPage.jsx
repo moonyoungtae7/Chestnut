@@ -73,11 +73,11 @@ const DiaryPage = ({ onSave, onNavigate }) => {
           <EmotionDropdown 
             selectedEmotion={childEmotion} 
             onSelect={setChildEmotion} 
-            placeholder="What do you think your child would have felt?"
+            placeholder="What do you think Little Chestnut felt?"
           />
           <textarea 
             className="diary-input"
-            placeholder="What do you think caused the child to behave that way and show such emotion?"
+            placeholder="What do you think caused Little Chestnut to behave that way and show such emotion?"
             value={childText}
             onChange={(e) => setChildText(e.target.value)}
           />
