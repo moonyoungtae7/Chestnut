@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import DiaryCard from '../components/DiaryCard';
 import './MyStoryPage.css';
 
-const MyStoryPage = ({ entries }) => {
+const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
   const [filterTarget, setFilterTarget] = useState('parent'); // 'parent' or 'child'
   const [filterVibe, setFilterVibe] = useState('all'); // 'all', 'positive', 'negative', 'contextual'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const filteredEntries = entries.filter((entry) => {
     const targetData = entry[filterTarget];
@@ -24,10 +28,96 @@ const MyStoryPage = ({ entries }) => {
     return true;
   });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      onLogin({ email });
+      setEmail('');
+      setPassword('');
+    }
+  };
+
   return (
     <div className="my-story-page">
       <header className="story-header">
-        <h1>Chestnut - My Story</h1>
+        <div className="header-top">
+          <h1>Chestnut - My Story</h1>
+          <button 
+            className={`account-toggle ${user ? 'logged-in' : ''}`} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {user ? (
+              <span className="user-initial">{user.email[0].toUpperCase()}</span>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        {/* Floating Account Menu */}
+        {isMenuOpen && (
+          <div className="account-dropdown slide-up">
+            {!user ? (
+              <div className="dropdown-inner">
+                <div className="banner-text">
+                  <h3>☁️ Sync Your Stories</h3>
+                  <p>Create an account to continue using across Mobile and PC without losing any diaries.</p>
+                </div>
+                
+                <form className="auth-form" onSubmit={(e) => { handleSubmit(e); setIsMenuOpen(false); }}>
+                  <div className="input-group">
+                    <input 
+                      type="email" 
+                      placeholder="Email Address" 
+                      value={email} 
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <input 
+                      type="password" 
+                      placeholder="Password" 
+                      value={password} 
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="auth-actions">
+                    <button type="submit" className="auth-btn">
+                      {isSignUp ? 'Sign Up' : 'Log In'}
+                    </button>
+                    <button 
+                      type="button" 
+                      className="toggle-auth" 
+                      onClick={() => setIsSignUp(!isSignUp)}
+                    >
+                      {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <div className="dropdown-inner user-active">
+                <div className="user-info">
+                  <div className="user-chip">
+                    <span className="user-chip-icon">👤</span>
+                    <span className="user-email">{user.email}</span>
+                  </div>
+                  <p className="sync-status">✓ Cloud Sync Active</p>
+                </div>
+                <button 
+                  className="logout-btn" 
+                  onClick={() => { onLogout(); setIsMenuOpen(false); }}
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="filter-tabs">
           <button 
             className={`tab ${filterTarget === 'parent' ? 'active' : ''}`}
@@ -43,6 +133,7 @@ const MyStoryPage = ({ entries }) => {
           </button>
         </div>
       </header>
+
 
       <div className="vibe-filters">
         <button 

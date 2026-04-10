@@ -7,7 +7,17 @@ import './index.css';
 
 function App() {
   const [activePage, setActivePage] = useState('diary');
+  const [user, setUser] = useState(null);
   const { entries, addEntry } = useDiaryEntries();
+
+  const handleLogin = (userData) => {
+    // Simulated login
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
 
   const renderPage = () => {
     switch (activePage) {
@@ -16,7 +26,14 @@ function App() {
       case 'calendar':
         return <CalendarPage entries={entries} />;
       case 'story':
-        return <MyStoryPage entries={entries} />;
+        return (
+          <MyStoryPage 
+            entries={entries} 
+            user={user} 
+            onLogin={handleLogin} 
+            onLogout={handleLogout} 
+          />
+        );
       default:
         return <DiaryPage onSave={addEntry} onNavigate={setActivePage} />;
     }

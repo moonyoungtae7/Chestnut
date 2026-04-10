@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import ChestnutCharacter from '../components/ChestnutCharacter';
+import DiaryCard from '../components/DiaryCard';
 import './CalendarPage.css';
 
 const CalendarPage = ({ entries }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedEntries, setSelectedEntries] = useState(null);
+  const [selectedDateLabel, setSelectedDateLabel] = useState('');
 
   const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
@@ -19,11 +22,9 @@ const CalendarPage = ({ entries }) => {
   ];
 
   const days = [];
-  // Add empty slots for days of previous month
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
   }
-  // Add days of current month
   for (let i = 1; i <= numDays; i++) {
     days.push(i);
   }
@@ -32,6 +33,23 @@ const CalendarPage = ({ entries }) => {
     if (!day) return [];
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     return entries.filter(e => e.createdAt.startsWith(dateStr));
+  };
+
+  const handleDayClick = (day, dayEntries) => {
+    if (dayEntries.length === 0) return;
+    
+    // Sort newest to oldest
+    const sorted = [...dayEntries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    setSelectedEntries(sorted);
+    setSelectedDateLabel(`${monthNames[month]} ${day}, ${year}`);
+    
+    // Lock scroll
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setSelectedEntries(null);
+    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -59,7 +77,11 @@ const CalendarPage = ({ entries }) => {
           const isMultiple = dayEntries.length > 1;
           
           return (
-            <div key={index} className={`calendar-day ${!day ? 'empty' : ''}`}>
+            <div 
+              key={index} 
+              className={`calendar-day ${!day ? 'empty' : ''} ${hasEntries ? 'has-content' : ''}`}
+              onClick={() => handleDayClick(day, dayEntries)}
+            >
               {day && (
                 <>
                   <span className="day-num">{day}</span>
@@ -80,6 +102,26 @@ const CalendarPage = ({ entries }) => {
           );
         })}
       </div>
+
+      {/* Diary Modal */}
+      {selectedEntries && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content slide-up" onClick={(e) => e.stopPropagation()}>
+            <header className="modal-header">
+              <div className="modal-title-area">
+                <h2>{selectedDateLabel}</h2>
+                <span className="entry-count">{selectedEntries.length} stories</span>
+              </div>
+              <button className="modal-close" onClick={closeModal}>✕</button>
+            </header>
+            <div className="modal-feed">
+              {selectedEntries.map(entry => (
+                <DiaryCard key={entry.id} entry={entry} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

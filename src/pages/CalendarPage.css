@@ -86,3 +86,130 @@
 .day-chestnut .chestnut-shadow {
   display: none; /* Hide shadow in calendar to save space and prevent clipping */
 }
+
+/* Interactive Calendar Days */
+.calendar-day.has-content {
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.calendar-day.has-content:hover {
+  background-color: #fff1f0;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-warm);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Modal Content Card */
+.modal-content {
+  background: var(--color-white);
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-header {
+  padding: 24px 24px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--color-white);
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.modal-title-area h2 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+  color: var(--color-text-primary);
+  font-weight: 800;
+}
+
+.entry-count {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  background: #fdf2f2;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: #888;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
+  transform: rotate(90deg);
+  color: var(--color-sweet-red);
+}
+
+.modal-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #fafafa;
+}
+
+/* Custom Modal Scrollbar */
+.modal-feed::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-feed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-feed::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+@media (max-width: 500px) {
+  .modal-overlay {
+    padding: 12px;
+  }
+  
+  .modal-content {
+    border-radius: 28px;
+    max-height: 90vh;
+  }
+  
+  .modal-feed {
+    padding: 16px;
+    gap: 16px;
+  }
+}
