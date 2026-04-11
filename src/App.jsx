@@ -1,28 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DiaryPage from './DiaryPage';
 import CalendarPage from './pages/CalendarPage';
 import MyStoryPage from './pages/MyStoryPage';
 import { useDiaryEntries } from './hooks/useDiaryEntries';
+import { supabase } from './lib/supabase';
 import './index.css';
 
 function App() {
   const [activePage, setActivePage] = useState('diary');
   const [user, setUser] = useState(null);
-  const { entries, addEntry } = useDiaryEntries();
+  const { entries, addEntry, migrateEntries } = useDiaryEntries();
 
-  const handleLogin = (userData) => {
-    // Simulated login
-    setUser(userData);
+  useEffect(() => {
+    // Check current session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+        migrateEntries(session.user.id);
+      }
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        migrateEntries(session.user.id);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogin = async ({ email, password, isSignUp }) => {
+    if (isSignUp) {
+      const { data, error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          data: {
+            full_name: email.split('@')[0], // Simplified name
+          }
+        }
+      });
+      if (error) throw error;
+      if (data?.user?.identities?.length === 0) {
+        throw new Error('User already exists');
+      }
+      alert('Success! Check your email for the confirmation link.');
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+    }
   };
 
-  const handleLogout = () => {
-    setUser(null);
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error('Error signing out:', error.message);
   };
 
   const renderPage = () => {
     switch (activePage) {
       case 'diary':
-        return <DiaryPage onSave={addEntry} onNavigate={setActivePage} />;
+        return (
+          <DiaryPage 
+            onSave={(entry) => addEntry(entry, user?.email)} 
+            onNavigate={setActivePage} 
+          />
+        );
       case 'calendar':
         return <CalendarPage entries={entries} />;
       case 'story':
@@ -35,7 +81,12 @@ function App() {
           />
         );
       default:
-        return <DiaryPage onSave={addEntry} onNavigate={setActivePage} />;
+        return (
+          <DiaryPage 
+            onSave={(entry) => addEntry(entry, user?.email)} 
+            onNavigate={setActivePage} 
+          />
+        );
     }
   };
 

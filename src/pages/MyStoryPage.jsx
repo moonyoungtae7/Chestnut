@@ -9,6 +9,7 @@ const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [error, setError] = useState('');
 
   const filteredEntries = entries.filter((entry) => {
     const targetData = entry[filterTarget];
@@ -28,12 +29,21 @@ const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
     return true;
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
     if (email && password) {
-      onLogin({ email });
-      setEmail('');
-      setPassword('');
+      try {
+        await onLogin({ email, password, isSignUp });
+        if (!isSignUp) {
+          setEmail('');
+          setPassword('');
+          setIsMenuOpen(false);
+        }
+      } catch (err) {
+        setError(err.message);
+      }
     }
   };
 
@@ -67,7 +77,7 @@ const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
                   <p>Create an account to continue using across Mobile and PC without losing any diaries.</p>
                 </div>
                 
-                <form className="auth-form" onSubmit={(e) => { handleSubmit(e); setIsMenuOpen(false); }}>
+                <form className="auth-form" onSubmit={handleSubmit}>
                   <div className="input-group">
                     <input 
                       type="email" 
@@ -84,6 +94,7 @@ const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
                       required
                     />
                   </div>
+                  {error && <p className="auth-error">{error}</p>}
                   <div className="auth-actions">
                     <button type="submit" className="auth-btn">
                       {isSignUp ? 'Sign Up' : 'Log In'}
@@ -91,7 +102,10 @@ const MyStoryPage = ({ entries, user, onLogin, onLogout }) => {
                     <button 
                       type="button" 
                       className="toggle-auth" 
-                      onClick={() => setIsSignUp(!isSignUp)}
+                      onClick={() => {
+                        setIsSignUp(!isSignUp);
+                        setError('');
+                      }}
                     >
                       {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
                     </button>
